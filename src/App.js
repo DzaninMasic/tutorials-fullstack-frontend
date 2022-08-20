@@ -1,36 +1,52 @@
 import { useState } from "react";
+import { decrement, increment, incrementByAmount } from './redux/counter/counterSlice'
+import { useSelector, useDispatch } from 'react-redux'
+
 
 function App() {
-  
-  const [counter, setCounter] = useState(0);
-  const [showError, setShowError] = useState(false);
+  const [input, setInput] = useState('');
+  const counter = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch()
 
   const increaseValue = () => {
-    if(showError){
-      setShowError(false);
-    }
-    setCounter(prevCounter => prevCounter + 1)
+    dispatch(increment())
   }
 
   const decreaseValue = () => {
-    if(counter === 0){ 
-      setShowError(true)
-      return;
-    }
-    setCounter(prevCounter => prevCounter - 1)
+    dispatch(decrement())
   }
-  
+
+  const onChangeValue = (event) => {
+    if(!Number(event.target.value)) return;
+    setInput(event.target.value)
+  }
+
+  const increaseValueByAmount = () => {
+    dispatch(incrementByAmount(Number(input)))
+  }
+
   return (
+    <>
     <div>
-      <div style={{display: 'flex'}}>
-        <button onClick={decreaseValue}>-</button>
-        <p style={{maxHeight:'5px', margin: 0}}>{counter}</p>
-        <button onClick={increaseValue}>+</button>
+      <div style={{
+        display: 'flex'
+      }}>
+        <button onClick={decreaseValue}>
+          -
+        </button>
+        <p style={{ maxHeight: '5px', margin: 0}}>
+          {counter}
+        </p>
+        <button onClick={increaseValue}>
+          +
+        </button>
       </div>
-      {showError && <div>
-        <p>Error message.</p>
-      </div>}
     </div>
+    <div>
+      <input value={input} onChange={onChangeValue}></input>
+      <button onClick={increaseValueByAmount}>Add amount</button>
+    </div>
+    </>
   );
 }
 
