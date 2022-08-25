@@ -21,7 +21,7 @@ const ResponsiveAppBar = () => {
 
     return(
         <React.Fragment>
-            <AppBar sx={{background: '#715AFF'}}>
+            <AppBar sx={{background: '#715AFF'}} position="static">
                 <Toolbar>
                     <RestaurantIcon/>
                     {

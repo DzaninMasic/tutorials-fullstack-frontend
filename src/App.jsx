@@ -22,7 +22,7 @@ function App() {
       <div className="container">
         <ResponsiveAppBar/>
       </div>
-      <div className="container" style={{marginTop: '70px'}}>
+      <div className="container">
         <Routes>
           <Route path="*" element={<FirstScreen />} />
           <Route path="categories" element={<CategoriesScreen />} />
