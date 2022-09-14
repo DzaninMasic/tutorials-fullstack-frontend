@@ -14,8 +14,16 @@ import EditSubCategoryScreen from './pages/EditSubCategoryScreen';
 import NewSubCategoryScreen from './pages/NewSubCategoryScreen';
 import EditItemScreen from './pages/EditItemScreen';
 import NewItemScreen from './pages/NewItemScreen';
+import { useState, useEffect } from 'react';
 
 function App() {
+
+  const [role, setRole] = useState(null)
+
+  useEffect(() => {
+    setRole(window.localStorage.getItem('adminRole'))
+  },[])
+
   return (
     <>
       <BrowserRouter>
@@ -24,7 +32,7 @@ function App() {
       </div>
       <div className="container">
         <Routes>
-          <Route path="*" element={<FirstScreen />} />
+          {role === 'admin' ? <> 
           <Route path="categories" element={<CategoriesScreen />} />
           <Route path="categories/:categoryId" element={<EditCategoryScreen />} />
           <Route path="categories/new" element={<NewCategoryScreen />} />
@@ -35,7 +43,12 @@ function App() {
 
           <Route path="items" element={<ItemsScreen />} />
           <Route path="items/:itemId" element={<EditItemScreen/>} />
-          <Route path="items/new" element={<NewItemScreen/>} />
+          <Route path="items/new" element={<NewItemScreen/>} /> 
+          <Route path="*" element={<FirstScreen />} /> </> : 
+          <> 
+          <Route path="*" element={<FirstScreen />} /> </>}
+          
+          
         </Routes>
       </div>
       </BrowserRouter>
